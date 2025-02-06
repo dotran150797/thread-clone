@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Slot } from 'expo-router';
+import { Redirect, Slot, Stack, Tabs } from 'expo-router';
 import { useAuth } from '@clerk/clerk-expo';
 
 type Props = {};
@@ -11,7 +11,11 @@ const AppLayout = (props: Props) => {
     return <Redirect href={'/sign-in'} />;
   }
 
-  return <Slot />;
+  return (
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
+  );
 };
 
 export default AppLayout;
