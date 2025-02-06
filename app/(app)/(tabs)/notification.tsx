@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import Layout from '@/components/layout';
+import ThText from '@/components/text';
 
 type Props = {};
 
 const Notification = (props: Props) => {
   return (
-    <View>
-      <Text>Notification</Text>
-    </View>
+    <Layout>
+      <ThText>Notification</ThText>
+    </Layout>
   );
 };
 

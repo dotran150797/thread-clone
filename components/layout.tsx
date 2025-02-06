@@ -8,7 +8,7 @@ type Props = {
 
 const Layout = ({ className, children }: Props) => {
   return (
-    <SafeAreaView className={`flex-1 p-12 ${className}`}>
+    <SafeAreaView className={`flex-1 p-12 dark:bg-black ${className}`}>
       {children}
     </SafeAreaView>
   );

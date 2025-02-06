@@ -7,7 +7,10 @@ type Props = {
 
 const ThText = (props: Props) => {
   return (
-    <Text className={props.className} style={{ fontFamily: 'DMSans' }}>
+    <Text
+      className={`dark:color-white ${props.className}`}
+      style={{ fontFamily: 'DMSans' }}
+    >
       {props.children}
     </Text>
   );
