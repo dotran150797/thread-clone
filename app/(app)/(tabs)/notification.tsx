@@ -3,9 +3,7 @@ import React from 'react';
 import Layout from '@/components/layout';
 import ThText from '@/components/text';
 
-type Props = {};
-
-const Notification = (props: Props) => {
+const Notification = () => {
   return (
     <Layout>
       <ThText>Notification</ThText>

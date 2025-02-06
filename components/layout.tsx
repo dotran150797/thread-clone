@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import React, { PropsWithChildren } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 

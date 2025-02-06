@@ -1,10 +1,8 @@
 import React from 'react';
-import { Redirect, Slot, Stack, Tabs } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { useAuth } from '@clerk/clerk-expo';
 
-type Props = {};
-
-const AppLayout = (props: Props) => {
+const AppLayout = () => {
   const { isSignedIn } = useAuth();
 
   if (!isSignedIn) {

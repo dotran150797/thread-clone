@@ -11,9 +11,7 @@ import ThText from '@/components/text';
 import { useSSO } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
 
-type Props = {};
-
-const SignIn = (props: Props) => {
+const SignIn = () => {
   const { startSSOFlow } = useSSO();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -30,7 +28,7 @@ const SignIn = (props: Props) => {
       if (createdSessionId) {
         setActive!({ session: createdSessionId });
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        router.replace('/(app)');
+        router.replace('/(app)/(tabs)');
       }
     } catch (error) {
       console.error(JSON.stringify(error, null, 2));

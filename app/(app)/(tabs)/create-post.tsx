@@ -1,11 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import Layout from '@/components/layout';
 import ThText from '@/components/text';
 
-type Props = {};
-
-const CreatePost = (props: Props) => {
+const CreatePost = () => {
   return (
     <Layout>
       <ThText>CreatePost</ThText>
