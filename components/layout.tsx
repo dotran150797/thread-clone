@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View } from 'react-native';
 
 type Props = {
   className?: string;
@@ -7,9 +7,9 @@ type Props = {
 
 const Layout = ({ className, children }: Props) => {
   return (
-    <SafeAreaView className={`flex-1 p-12 dark:bg-black ${className}`}>
+    <View className={`flex-1 p-8 bg-white dark:bg-black ${className}`}>
       {children}
-    </SafeAreaView>
+    </View>
   );
 };
 

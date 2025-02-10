@@ -5,6 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import { useColorScheme } from 'nativewind';
+import HomeLogo from '@/assets/svg/home-logo';
 
 type Props = {};
 
@@ -20,17 +21,21 @@ const TabLayout = (props: Props) => {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: 'black',
-        headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: isDarkMode ? 'black' : 'white',
+        },
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          headerTitle: () => <HomeLogo />,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name={focused ? 'home' : 'home-outline'}
@@ -97,5 +102,3 @@ const TabLayout = (props: Props) => {
 };
 
 export default TabLayout;
-
-const styles = StyleSheet.create({});
