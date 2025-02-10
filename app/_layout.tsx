@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Slot, SplashScreen } from 'expo-router';
 import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo';
+import { ConvexProvider, ConvexReactClient } from 'convex/react';
 import { tokenCache } from '@/cache';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
@@ -18,6 +19,10 @@ import '../global.css';
 SplashScreen.preventAutoHideAsync();
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+
+const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+  unsavedChangesWarning: false,
+});
 
 const AppLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -40,13 +45,15 @@ const AppLayout = () => {
   }
 
   return (
-    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-      <ClerkLoaded>
-        <SafeAreaProvider>
-          <Slot />
-        </SafeAreaProvider>
-      </ClerkLoaded>
-    </ClerkProvider>
+    <ConvexProvider client={convex}>
+      <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+        <ClerkLoaded>
+          <SafeAreaProvider>
+            <Slot />
+          </SafeAreaProvider>
+        </ClerkLoaded>
+      </ClerkProvider>
+    </ConvexProvider>
   );
 };
 
