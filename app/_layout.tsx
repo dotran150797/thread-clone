@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Slot, SplashScreen } from 'expo-router';
-import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo';
+import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import { ConvexProvider, ConvexReactClient } from 'convex/react';
+import { ConvexProviderWithClerk } from 'convex/react-clerk';
 import { tokenCache } from '@/cache';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
@@ -45,15 +46,15 @@ const AppLayout = () => {
   }
 
   return (
-    <ConvexProvider client={convex}>
-      <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <ClerkLoaded>
           <SafeAreaProvider>
             <Slot />
           </SafeAreaProvider>
         </ClerkLoaded>
-      </ClerkProvider>
-    </ConvexProvider>
+      </ConvexProviderWithClerk>
+    </ClerkProvider>
   );
 };
 
