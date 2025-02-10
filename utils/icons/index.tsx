@@ -4,6 +4,6 @@ export const getIconColorWithStatus = ({
   isActived: boolean;
 }): { strokeWith: number; fill: string } => {
   const strokeWith = isActived ? 0 : 3;
-  const fill = isActived ? 'black' : 'none';
+  const fill = isActived ? DARK_COLOR : 'none';
   return { strokeWith, fill };
 };
