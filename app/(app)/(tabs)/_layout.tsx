@@ -3,7 +3,7 @@ import React from 'react';
 import HomeLogo from '@/assets/svg/home-logo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { useColorScheme } from 'nativewind';
 
 import { DARK_COLOR, WHITE_COLOR } from '@/utils/constants';
@@ -14,6 +14,7 @@ const ICON_SIZE = 30;
 
 const TabLayout = (props: Props) => {
   const { colorScheme } = useColorScheme();
+  const router = useRouter();
 
   const isDarkMode = colorScheme === 'dark';
   const iconColor = isDarkMode ? WHITE_COLOR : DARK_COLOR;
@@ -68,6 +69,12 @@ const TabLayout = (props: Props) => {
             />
           ),
         }}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            router.push('/(app)/(modals)/create-post');
+          },
+        })}
       />
       <Tabs.Screen
         name="notification"

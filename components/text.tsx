@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
-import { StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 
 type Props = {
   className?: string;
@@ -15,5 +15,3 @@ const ThText = (props: Props) => {
 };
 
 export default ThText;
-
-const styles = StyleSheet.create({});

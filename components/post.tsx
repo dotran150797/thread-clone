@@ -14,25 +14,6 @@ cssInterop(Image, { className: 'style' });
 
 type Props = {};
 
-const POST_ICONS = [
-  {
-    name: 'heart-outline',
-    Wrapper: Ionicons,
-  },
-  {
-    name: 'comment-o',
-    Wrapper: FontAwesome,
-  },
-  {
-    name: 'retweet',
-    Wrapper: AntDesign,
-  },
-  {
-    name: 'send',
-    Wrapper: Feather,
-  },
-];
-
 const Post = (props: Props) => {
   const { colorScheme } = useColorScheme();
 
@@ -57,18 +38,46 @@ const Post = (props: Props) => {
           forward
         </ThText>
         <View className="flex-row gap-3 mt-2">
-          {POST_ICONS.map(({ name, Wrapper }, index) => (
-            <TouchableOpacity key={index + name}>
-              <Wrapper
-                // @ts-ignore
-                name={name}
-                size={22}
-                color={colorScheme === 'light' ? DARK_COLOR : WHITE_COLOR}
-              />
-            </TouchableOpacity>
-          ))}
+          <PostIcons />
         </View>
       </View>
+    </View>
+  );
+};
+
+const POST_ICONS = [
+  {
+    name: 'heart-outline',
+    Wrapper: Ionicons,
+  },
+  {
+    name: 'comment-o',
+    Wrapper: FontAwesome,
+  },
+  {
+    name: 'retweet',
+    Wrapper: AntDesign,
+  },
+  {
+    name: 'send',
+    Wrapper: Feather,
+  },
+];
+
+const PostIcons = () => {
+  const { colorScheme } = useColorScheme();
+  return (
+    <View className="flex-row gap-3 mt-2">
+      {POST_ICONS.map(({ name, Wrapper }, index) => (
+        <TouchableOpacity key={index + name}>
+          <Wrapper
+            // @ts-ignore
+            name={name}
+            size={22}
+            color={colorScheme === 'light' ? DARK_COLOR : WHITE_COLOR}
+          />
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };

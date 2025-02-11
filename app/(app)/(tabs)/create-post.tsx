@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { StyleSheet } from 'react-native';
-
 import Layout from '@/components/layout';
 import ThText from '@/components/text';
 
