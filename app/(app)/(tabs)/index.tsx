@@ -1,5 +1,7 @@
-import { FlatList, View } from 'react-native';
 import React from 'react';
+
+import { FlatList, View } from 'react-native';
+
 import Layout from '@/components/layout';
 import Post from '@/components/post';
 

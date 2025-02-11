@@ -1,10 +1,11 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
+
+import HomeLogo from '@/assets/svg/home-logo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
+import { Tabs } from 'expo-router';
 import { useColorScheme } from 'nativewind';
-import HomeLogo from '@/assets/svg/home-logo';
+
 import { DARK_COLOR, WHITE_COLOR } from '@/utils/constants';
 
 type Props = {};
@@ -36,15 +37,9 @@ const TabLayout = (props: Props) => {
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: () => (
-            <HomeLogo fill={isDarkMode ? WHITE_COLOR : DARK_COLOR} />
-          ),
+          headerTitle: () => <HomeLogo fill={isDarkMode ? WHITE_COLOR : DARK_COLOR} />,
           tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? 'home' : 'home-outline'}
-              size={ICON_SIZE}
-              color={iconColor}
-            />
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={ICON_SIZE} color={iconColor} />
           ),
         }}
       />

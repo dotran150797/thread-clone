@@ -1,6 +1,7 @@
 import React from 'react';
-import { Redirect, Stack } from 'expo-router';
+
 import { useAuth } from '@clerk/clerk-expo';
+import { Redirect, Stack } from 'expo-router';
 
 const AppLayout = () => {
   const { isSignedIn } = useAuth();

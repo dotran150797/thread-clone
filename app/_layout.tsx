@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react';
-import { Slot, SplashScreen } from 'expo-router';
-import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
-import { ConvexProvider, ConvexReactClient } from 'convex/react';
-import { ConvexProviderWithClerk } from 'convex/react-clerk';
+
 import { tokenCache } from '@/cache';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import {
-  useFonts,
   DMSans_400Regular,
   DMSans_400Regular_Italic,
   DMSans_500Medium,
   DMSans_500Medium_Italic,
   DMSans_700Bold,
   DMSans_700Bold_Italic,
+  useFonts,
 } from '@expo-google-fonts/dm-sans';
+import { ConvexReactClient } from 'convex/react';
+import { ConvexProviderWithClerk } from 'convex/react-clerk';
+import { Slot, SplashScreen } from 'expo-router';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import '../global.css';
 

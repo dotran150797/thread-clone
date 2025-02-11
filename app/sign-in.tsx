@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import ThImage from '@/components/image';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-native';
+
 import ThreadLogo from '@/assets/svg/thread-logo';
-import ThText from '@/components/text';
 import { useSSO } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
+
+import ThImage from '@/components/image';
+import ThText from '@/components/text';
 
 const SignIn = () => {
   const { startSSOFlow } = useSSO();
@@ -46,9 +44,7 @@ const SignIn = () => {
           className="flex-1 mr-10 ml-10 border rounded-3xl border-[#DDDBDB]"
         >
           <View className="flex-1 flex-row items-center p-5 justify-between">
-            <ThText className="font-medium text-lg color-[#B2B3B2]">
-              Log in with Instagram
-            </ThText>
+            <ThText className="font-medium text-lg color-[#B2B3B2]">Log in with Instagram</ThText>
             {isLoading ? (
               <ActivityIndicator />
             ) : (
