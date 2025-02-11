@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Pressable, TouchableOpacity, View } from 'react-native';
+import { Pressable, ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { PostWithAuthor } from '@/convex/posts';
 import { AntDesign, Entypo, Feather, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import { cssInterop, useColorScheme } from 'nativewind';
 
 import { DARK_COLOR, WHITE_COLOR } from '@/utils/constants';
 
+import ListImage from './list-image';
 import ThText from './text';
 
 cssInterop(Image, { className: 'style' });
@@ -40,6 +41,7 @@ const Post = ({ post }: Props) => {
           </View>
         </View>
         <ThText className="text-lg pt-1">{post.content}</ThText>
+        <ListImage images={post?.image_url} />
         <View className="flex-row gap-3 mt-2">
           <PostIcons />
         </View>

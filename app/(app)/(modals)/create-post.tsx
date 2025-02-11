@@ -11,17 +11,19 @@ import {
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import * as mime from '@shopify/mime-types';
 import clsx from 'clsx';
 import { useMutation } from 'convex/react';
+import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 
 import Avatar from '@/components/avatar';
 import Layout from '@/components/layout';
+import ListImage from '@/components/list-image';
 import ThText from '@/components/text';
 
 import { DARK_COLOR, HIT_SLOP, WHITE_COLOR } from '@/utils/constants';
 
-import { useConvexLoading } from '@/hooks/useConvexLoading';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useIsDarkMode from '@/hooks/useIsDarkMode';
 
@@ -33,23 +35,82 @@ const CreatePostModal = (props: Props) => {
   const [value, setInputValue] = React.useState('');
   const isDarkMode = useIsDarkMode();
   const router = useRouter();
+  const [images, setImages] = React.useState<Array<ImagePicker.ImagePickerAsset>>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const createPost = useMutation(api.posts.createPostMutation);
-  const isLoading = useConvexLoading(createPost);
+
+  const generateUploadUrl = useMutation(api.posts.generateUploadUrl);
+
+  const selectImage = React.useCallback(async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      quality: 0.5,
+      allowsMultipleSelection: true,
+    });
+
+    if (!result.canceled) {
+      setImages(result.assets);
+    }
+  }, []);
+
+  const uploadImages = async (images: ImagePicker.ImagePickerAsset[]) => {
+    const uploadedUrls = [];
+
+    for (const image of images) {
+      const imageUri = image.uri;
+      const extension = imageUri.split('.').pop() || '';
+      const mimeType = mime.getMimeTypeFromFilename(extension) || 'application/octet-stream';
+
+      // Get presigned URL from Convex
+      const postUrl = await generateUploadUrl();
+
+      // Convert URI to blob
+      const response = await fetch(imageUri);
+      const blob = await response.blob();
+
+      // Upload to Convex storage
+      const result = await fetch(postUrl, {
+        method: 'POST',
+        body: blob,
+        headers: {
+          'Content-Type': mimeType,
+        },
+      });
+
+      if (!result.ok) {
+        throw new Error(`Upload failed: ${result.statusText}`);
+      }
+
+      const storageId = await result.text();
+      uploadedUrls.push(JSON.parse(storageId).storageId);
+    }
+
+    return uploadedUrls;
+  };
 
   const onCreatePost = React.useCallback(async () => {
     try {
+      setIsLoading(true);
+
+      let imageUrls: string[] = [];
+      if (images.length > 0) {
+        imageUrls = await uploadImages(images);
+      }
+
       await createPost({
         user_id: currentUser?._id as Id<'users'>,
         content: value,
+        image_url: imageUrls as string[],
       });
     } catch (error) {
       console.error(error);
     } finally {
+      setIsLoading(false);
       setInputValue('');
       router.dismiss();
     }
-  }, [value, currentUser]);
+  }, [value, currentUser, images]);
 
   return (
     <Layout>
@@ -64,9 +125,12 @@ const CreatePostModal = (props: Props) => {
             autoFocus
             className="mt-1 dark:color-white"
             placeholder="What's new?"
+            multiline
           />
 
-          <TouchableOpacity hitSlop={HIT_SLOP}>
+          <ListImage images={images.map((image) => image.uri)} />
+
+          <TouchableOpacity onPress={selectImage} hitSlop={HIT_SLOP}>
             <SimpleLineIcons
               className="pt-2"
               size={20}

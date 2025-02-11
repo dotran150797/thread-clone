@@ -60,10 +60,21 @@ export const getPostsByUser = query({
     // Create a map of userId to user for quick lookup
     const userMap = new Map(users.filter(Boolean).map((user) => [user!._id, user]));
 
-    const postsWithAuthors = posts.page.map((post) => ({
-      ...post,
-      author: userMap.get(post.user_id) ?? null,
-    })) as PostWithAuthor[];
+    const postsWithAuthors = await Promise.all(
+      posts.page.map(async (post) => {
+        const author = userMap.get(post.user_id);
+        if (post?.image_url?.length ?? 0 > 0) {
+          const imageUrls = await Promise.all(
+            (post?.image_url ?? []).map(async (url) => {
+              const signedUrl = await ctx.storage.getUrl(url);
+              return signedUrl;
+            })
+          );
+          return { ...post, author, image_url: imageUrls } as PostWithAuthor;
+        }
+        return { ...post, author } as PostWithAuthor;
+      })
+    );
 
     return {
       posts: postsWithAuthors,
