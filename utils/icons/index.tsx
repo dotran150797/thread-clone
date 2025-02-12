@@ -1,3 +1,5 @@
+import { DARK_COLOR } from '../constants';
+
 export const getIconColorWithStatus = ({
   isActived,
 }: {

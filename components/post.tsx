@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Pressable, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Pressable, TouchableOpacity, View } from 'react-native';
 
 import { PostWithAuthor } from '@/convex/posts';
 import { AntDesign, Entypo, Feather, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -22,7 +22,17 @@ type Props = {
 const Post = ({ post }: Props) => {
   const { colorScheme } = useColorScheme();
 
-  const hourDiff = dayjs().diff(dayjs(post.createdAt), 'm') + 'm';
+  const timeDiff = React.useMemo(() => {
+    const mins = dayjs().diff(dayjs(post.createdAt), 'm');
+    const MINS_IN_DAY = 1440;
+    if (mins < 60) {
+      return `${mins}m`;
+    } else if (mins < MINS_IN_DAY) {
+      return `${Math.floor(mins / 60)}h`;
+    } else {
+      return `${Math.floor(mins / MINS_IN_DAY)}d`;
+    }
+  }, [post.createdAt]);
 
   return (
     <View className="flex-1 flex-row content-center">
@@ -31,7 +41,7 @@ const Post = ({ post }: Props) => {
         <View className="flex-row justify-between">
           <ThText className="text-xl font-bold">{post.author?.displayName}</ThText>
           <View className="flex-row mt-2">
-            <ThText className="mr-6 color-[#A0A0A0]">{hourDiff}</ThText>
+            <ThText className="mr-6 color-[#A0A0A0]">{timeDiff}</ThText>
             <Pressable>
               <Entypo
                 color={colorScheme === 'light' ? DARK_COLOR : WHITE_COLOR}
